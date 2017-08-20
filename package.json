@@ -1,0 +1,24 @@
+{
+  "name": "l-r-",
+  "version": "1.0.0",
+  "description": "text-based virtual assitant",
+  "main": "liri.js",
+  "scripts": {
+    "test": "console.log('hello package.json')"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BrienHall/LIRI.git"
+  },
+  "author": "Brien Hall",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BrienHall/LIRI/issues"
+  },
+  "homepage": "https://github.com/BrienHall/LIRI#readme",
+  "dependencies": {
+    "node-spotify-api": "^1.0.7",
+    "request": "^2.81.0",
+    "twitter": "^1.7.1"
+  }
+}
