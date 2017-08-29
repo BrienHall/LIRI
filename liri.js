@@ -18,7 +18,11 @@ spotify.search({type: 'track', query: query, limit: 5}, function(err, data) {
     return console.log('Error occurred: ' + err);
   	}
   	else {
-	console.log(data.tracks.items);
+	var songData = data.tracks.items[0];
+	var songResult = ("Artist: " + songData.artists[0].name + "\nTrack: " + songData.name +
+    "\nAlbum: " + songData.album.name + "\nPreview: " + songData.preview_url + "\n----------");
+
+	console.log(songResult);
 	}
 });
 
