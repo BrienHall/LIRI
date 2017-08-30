@@ -60,7 +60,14 @@ if(command === 'my-tweets') {
 }
 
 if(command === 'movie-this') {
-	request('http://www.omdbapi.com/?apikey='+ movies.key +'&t=' + query + '', function (err, response, body) {
+	if (query != '') {
+			query = query;
+		} else {
+			query = 'Mr. Nobody';
+		}
+	}
+	var queryURL = 'http://www.omdbapi.com/?apikey='+ movies.key +'&t=' + query + ''
+	request(queryURL, function (err, response, body) {
 	if(err){
 		console.log('error:', error);
 	}
