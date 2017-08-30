@@ -1,15 +1,15 @@
-console.log('Hello World');
+
 
 var inquirer = require("inquirer");
 var keys = require('./keys.js')
 
 var Spotify = require('node-spotify-api');
 var Twitter = require('twitter');
+var Movies = require('request');
 
 var command = process.argv[2];
 var query = process.argv[3];
 
-//Spotify query
 var spotify = new Spotify({
 	id: keys.spotifyKeys.id,
 	secret: keys.spotifyKeys.secret
@@ -20,6 +20,10 @@ var twitter = new Twitter({
 	consumer_secret: keys.twitterKeys.consumer_secret,
 	access_token_key: keys.twitterKeys.access_token_key,
 	access_token_secret: keys.twitterKeys.access_token_secret
+})
+
+var movies = new Movies({
+	key: keys.omdbKeys.key
 })
 
 if(command === 'spotify-this-song') {
@@ -38,19 +42,32 @@ if(command === 'spotify-this-song') {
 }
 
 if(command === 'my-tweets') {
-	twitter.get('statuses/user_timeline',function(err,tweets,response){
+	var user = {screen_name: 'DissentChannel'};
+	twitter.get('statuses/user_timeline', user, function(err,tweets,response){
 		if(err) {
 			return console.log('Error occured: ' + err);
 		}
 		else {
-		for(var i=0; i<tweets.length||i<19; i++){
-			console.log(response.tweets);
+		for(var i=0; i<tweets.length; i++){
+			console.log(tweets[i].text);
+			console.log('Posted - ' + tweets[i].created_at);
 			console.log("");
 			console.log("-------------------------");
 			console.log("");
 		}
 		}
 	});
+}
+
+if(command === 'movie-this') {
+	request('http://www.omdbapi.com/?apikey='+ movies.key +'&t=' + query + '', function (err, response, body) {
+	if(err){
+		console.log('error:', error);
+	}
+	else { // Print the error if one occurred 
+	console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
+	console.log('body:', body); // Print the HTML for the Google homepage. 
+	}
 }
 
 
