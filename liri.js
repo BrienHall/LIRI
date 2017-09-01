@@ -8,8 +8,6 @@ var request = require('request');
 var command = process.argv[2];
 var query = process.argv[3];
 
-var trim = require('trim');
-
 var spotify = new Spotify({
 	id: keys.spotifyKeys.id,
 	secret: keys.spotifyKeys.secret
