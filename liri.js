@@ -20,7 +20,6 @@ var twitter = new Twitter({
 	access_token_secret: keys.twitterKeys.access_token_secret
 })
 
-var movies = new request;
 
 if(command === 'spotify-this-song') {
 	spotify.search({type: 'track', query: query, limit: 5}, function(err, data) {
@@ -39,7 +38,7 @@ if(command === 'spotify-this-song') {
 
 if(command === 'my-tweets') {
 	var user = {screen_name: 'DissentChannel'};
-	twitter.get('statuses/user_timeline', user, function(err,tweets,response){
+	twitter.get('statuses/user_timeline', user, function(err, tweets, response){
 		if(err) {
 			return console.log('Error occured: ' + err);
 		}
@@ -57,25 +56,35 @@ if(command === 'my-tweets') {
 
 
 if(command === 'movie-this') {
-			movies.get('http://www.omdbapi.com/?t='+query+'&apikey=40e9cece', function (err, response, body) {
-				if(err){
-					console.log('error:', error);
+	var url = 'https://www.omdbapi.com/?apikey=40e9cece&t=';
+		if (!query || query.length <= 0) {
+			url += 'Mr. Nobody';
+		} else {
+			url += query;
+			}
+			request(url, function (err, response, body) {
+				if (err) {
+					console.log("Error: " + err);
+				} else {
+					var body = JSON.parse(body);
+					console.log('Title: ', body.Title);
+					console.log('Year: ', body.Year);
+					console.log('IMDB Rating: ', body.Ratings[0].Value);
+					console.log('Rotten Tomatoes: ', body.Ratings[1].Value);
+					console.log('Country: ', body.Country);
+					console.log('Language: ', body.Language);
+					console.log("-------------------------");
+					console.log('Plot: ', body.Plot);
+					console.log("-------------------------");
+					console.log('Actors: ', body.Actors);
 				}
-				else {
-				console.log('Title: ', response.Title);
-				console.log('Year: ', response.Year);
-				console.log('IMDB Rating: ', response.Ratings[0].Value);
-				console.log('Rotten Tomatoes: ', response.Ratings[1].Value);
-				console.log('Country: ', response.Country);
-				console.log('Language: ', response.Language);
-				console.log("-------------------------");
-				console.log('Plot: ', response.Plot);
-				console.log("-------------------------");
-				console.log('Actors: ', response.Actors);
-				}
-			})
+
+			});
+
 }
 
+// do what it says function {
+// 	read text from random.txt to run one of the other commands
 // }
 
 // if (command === 'do-what-it-says') {
@@ -93,9 +102,6 @@ if(command === 'movie-this') {
 // }
 
 
-// do what it says function {
-// 	read text from random.txt to run one of the other commands
-// }
 
 
 
