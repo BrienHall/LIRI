@@ -17,7 +17,8 @@
   },
   "homepage": "https://github.com/BrienHall/LIRI#readme",
   "dependencies": {
-    "inquirer": "^3.2.2",
+    "fs": "0.0.1-security",
+    "inquirer": "^3.2.3",
     "node-spotify-api": "^1.0.7",
     "request": "^2.81.0",
     "twitter": "^1.7.1"

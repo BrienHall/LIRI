@@ -1,11 +1,9 @@
-
-
-var inquirer = require("inquirer");
+var fs = require('fs');
 var keys = require('./keys.js')
 
 var Spotify = require('node-spotify-api');
 var Twitter = require('twitter');
-var Movies = require('request');
+var request = require('request');
 
 var command = process.argv[2];
 var query = process.argv[3];
@@ -22,9 +20,7 @@ var twitter = new Twitter({
 	access_token_secret: keys.twitterKeys.access_token_secret
 })
 
-var movies = new Movies({
-	key: keys.omdbKeys.key
-})
+var movies = new request;
 
 if(command === 'spotify-this-song') {
 	spotify.search({type: 'track', query: query, limit: 5}, function(err, data) {
@@ -50,7 +46,7 @@ if(command === 'my-tweets') {
 		else {
 		for(var i=0; i<tweets.length; i++){
 			console.log(tweets[i].text);
-			console.log('Posted - ' + tweets[i].created_at);
+			console.log('Posted on: ' + tweets[i].created_at);
 			console.log("");
 			console.log("-------------------------");
 			console.log("");
@@ -59,43 +55,43 @@ if(command === 'my-tweets') {
 	});
 }
 
+
 if(command === 'movie-this') {
-	if (query != '') {
-			query = query;
-		} else {
-			query = 'Mr. Nobody';
-		}
-	}
-	var queryURL = 'http://www.omdbapi.com/?apikey='+ movies.key +'&t=' + query + ''
-	request(queryURL, function (err, response, body) {
-	if(err){
-		console.log('error:', error);
-	}
-	else { // Print the error if one occurred 
-	console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
-	console.log('body:', body); // Print the HTML for the Google homepage. 
-	}
+			movies.get('http://www.omdbapi.com/?t='+query+'&apikey=40e9cece', function (err, response, body) {
+				if(err){
+					console.log('error:', error);
+				}
+				else {
+				console.log('Title: ', response.Title);
+				console.log('Year: ', response.Year);
+				console.log('IMDB Rating: ', response.Ratings[0].Value);
+				console.log('Rotten Tomatoes: ', response.Ratings[1].Value);
+				console.log('Country: ', response.Country);
+				console.log('Language: ', response.Language);
+				console.log("-------------------------");
+				console.log('Plot: ', response.Plot);
+				console.log("-------------------------");
+				console.log('Actors: ', response.Actors);
+				}
+			})
 }
 
-
-
-// Twitter function {
-// 	give me last 20 tweets with timestamps
 // }
 
-
-// movie function {
-// 	for a given movie title
-// 		 Title of the movie.
-//    * Year the movie came out.
-//    * IMDB Rating of the movie.
-//    * Rotten Tomatoes Rating of the movie.
-//    * Country where the movie was produced.
-//    * Language of the movie.
-//    * Plot of the movie.
-//    * Actors in the movie.
-
+// if (command === 'do-what-it-says') {
+//   argument = './random.txt';
+//   fs.readFile(argument, 'utf8', (err, data) => {
+//     if (err) throw err;
+//     var commands = data.trim().split('\n');
+//     for (var c in commands) {
+//       args = commands[c].trim().split(' ');
+//       command = (args.shift() || '').toLowerCase();
+//       argument = args.join(' ');
+//       if (command) checkCommand();
+//     }
+//   });
 // }
+
 
 // do what it says function {
 // 	read text from random.txt to run one of the other commands

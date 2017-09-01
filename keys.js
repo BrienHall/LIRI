@@ -1,5 +1,6 @@
-console.log('this is loaded');
 console.log("");
+console.log("-------------------------");
+console.log('this is loaded');
 console.log("-------------------------");
 console.log("");
 
